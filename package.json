@@ -1,5 +1,5 @@
 {
-  "name": "Crossmint-Megaverse",
+  "name": "crossmint-megaverse",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Santiago Grangetto <santiagograngetto@gmail.com>",
@@ -21,9 +21,11 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-security": "^1.5.0",
+    "nodemon": "^2.0.22",
     "prettier": "^2.6.2"
   },
   "scripts": {
+    "dev": "nodemon --exec babel-node src/index.js",
     "start": "babel src -d dist && node dist/index.js",
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx --fix"

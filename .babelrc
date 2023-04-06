@@ -8,5 +8,18 @@
         }
       }
     ]
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@config": "./src/config",
+          "@services": "./src/services",
+          "@utils": "./src/utils"
+        }
+      }
+    ],
+    ["inline-dotenv", { "path": ".env" }]
   ]
 }
