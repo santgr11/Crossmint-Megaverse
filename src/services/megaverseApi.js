@@ -88,5 +88,87 @@ export default {
       );
       throw err;
     }
+  },
+
+  async setSOLoon({ row, column, color }) {
+    if (!['blue', 'red', 'purple', 'white'].includes(color)) {
+      throw new Error(`Invalid color: ${color}`);
+    }
+
+    try {
+      const response = await axiosInstance.post('/soloons', {
+        row,
+        column,
+        color,
+        candidateId: config.candidateId
+      });
+
+      return response.data;
+    } catch (err) {
+      console.error(
+        `Error setting SOLoon at [${row}, ${column}] with color ${color}: ${err.message}`
+      );
+      throw err;
+    }
+  },
+
+  async deleteSOLoon({ row, column }) {
+    try {
+      const response = await axiosInstance.delete('/soloons', {
+        data: {
+          row,
+          column,
+          candidateId: config.candidateId
+        }
+      });
+
+      return response.data;
+    } catch (err) {
+      console.error(
+        `Error deleting SOLoon at [${row}, ${column}]: ${err.message}`
+      );
+      throw err;
+    }
+  },
+
+  async setComETH({ row, column, direction }) {
+    if (!['up', 'down', 'right', 'left'].includes(direction)) {
+      throw new Error(`Invalid direction: ${direction}`);
+    }
+
+    try {
+      const response = await axiosInstance.post('/comeths', {
+        row,
+        column,
+        direction,
+        candidateId: config.candidateId
+      });
+
+      return response.data;
+    } catch (err) {
+      console.error(
+        `Error setting ComETH at [${row}, ${column}] with direction ${direction}: ${err.message}`
+      );
+      throw err;
+    }
+  },
+
+  async deleteComETH({ row, column }) {
+    try {
+      const response = await axiosInstance.delete('/comeths', {
+        data: {
+          row,
+          column,
+          candidateId: config.candidateId
+        }
+      });
+
+      return response.data;
+    } catch (err) {
+      console.error(
+        `Error deleting ComETH at [${row}, ${column}]: ${err.message}`
+      );
+      throw err;
+    }
   }
 };
