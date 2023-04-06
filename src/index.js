@@ -1,16 +1,22 @@
 import { megaverseApi } from '@services';
 import { getDifference, getPromises } from '@utils';
 
+const useDifference = false;
+
 const main = async () => {
-  const currentMap = await megaverseApi.getCurrentMap();
   const goalMap = await megaverseApi.getGoalMap();
 
-  const difference = getDifference({ current: currentMap, goal: goalMap });
+  if (useDifference) {
+    const currentMap = await megaverseApi.getCurrentMap();
+    const difference = getDifference({ current: currentMap, goal: goalMap });
 
-  console.log('differences:', difference);
+    console.log('differences:', difference);
 
-  if (difference.length > 0) {
-    await Promise.all(getPromises(difference));
+    if (difference.length > 0) {
+      await Promise.all(getPromises.fromDifferences(difference));
+    }
+  } else {
+    await Promise.all(getPromises.fromGoal(goalMap));
   }
 
   console.log('✅ done');
