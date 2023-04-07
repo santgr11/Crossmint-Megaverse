@@ -62,6 +62,8 @@ export default {
         candidateId: config.candidateId
       });
 
+      console.info(`POLYanet set at [${row}, ${column}]`);
+
       return response.data;
     } catch (err) {
       console.error(
@@ -103,6 +105,8 @@ export default {
         candidateId: config.candidateId
       });
 
+      console.info(`SOLoon set at [${row}, ${column}] with color ${color}`);
+
       return response.data;
     } catch (err) {
       console.error(
@@ -143,6 +147,10 @@ export default {
         direction,
         candidateId: config.candidateId
       });
+
+      console.info(
+        `ComETH set at [${row}, ${column}] with direction ${direction}`
+      );
 
       return response.data;
     } catch (err) {
