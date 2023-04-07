@@ -1,23 +1,29 @@
 import { megaverseApi } from '@services';
-import { getDifference, getPromises } from '@utils';
+import { getCallbacks, getDifference, resolveCallbackBatches } from '@utils';
 
-const useDifference = false;
+const useDifference = true;
 
 const main = async () => {
   const goalMap = await megaverseApi.getGoalMap();
 
+  let setCallbacks = [];
+
   if (useDifference) {
-    const currentMap = await megaverseApi.getCurrentMap();
-    const difference = getDifference({ current: currentMap, goal: goalMap });
+    for (let i = 0; i < 3; i++) {
+      const currentMap = await megaverseApi.getCurrentMap();
+      const difference = getDifference({ current: currentMap, goal: goalMap });
 
-    console.log('differences:', difference);
-
-    if (difference.length > 0) {
-      await Promise.all(getPromises.fromDifferences(difference));
+      if (difference.length > 0) {
+        setCallbacks = getCallbacks.fromDifferences(difference);
+      }
     }
   } else {
-    await Promise.all(getPromises.fromGoal(goalMap));
+    setCallbacks = getCallbacks.fromGoal(goalMap);
   }
+
+  console.info(`Setting ${setCallbacks.length} objects:`);
+  // To avoid rate limiting, we need to split the promises into batches
+  await resolveCallbackBatches(setCallbacks, 3);
 
   console.log('✅ done');
 };
