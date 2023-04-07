@@ -8,6 +8,8 @@ This repository has code to make use of the megaverse creator API to set a map o
 - Copy the `.env.example` into a new file called `.env` and fill in the variables.
 - Run the code by running the script in the terminal `yarn start` or `npm start`, it will build the project into the dist folder and run it. If you want to debug or run in dev mode, you can run the script `yarn dev` or `npm run dev`.
 
+Note: `yarn` was used during the development.
+
 ## Dependencies
 
 This code use different dependencies to achieve its goal.
