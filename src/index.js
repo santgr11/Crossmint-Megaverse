@@ -3,7 +3,9 @@ import { getCallbacks, getDifference, resolveCallbackBatches } from '@utils';
 import config from '@config';
 
 // If true, we will fetch the current state and only try to set the differences
-const useDifference = false;
+// reducing the total amount of API calls.
+// If false, we will try to set all the objects in the goal map.
+const useDifference = true;
 
 const main = async () => {
   if (!config.candidateId) {
