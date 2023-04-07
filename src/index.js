@@ -1,9 +1,19 @@
 import { megaverseApi } from '@services';
 import { getCallbacks, getDifference, resolveCallbackBatches } from '@utils';
+import config from '@config';
 
-const useDifference = true;
+// If true, we will fetch the current state and only try to set the differences
+const useDifference = false;
 
 const main = async () => {
+  if (!config.candidateId) {
+    throw new Error('No candidate ID provided');
+  }
+
+  if (!config.megaverseApiURL) {
+    throw new Error('No Megaverse API URL provided');
+  }
+
   const goalMap = await megaverseApi.getGoalMap();
 
   let setCallbacks = [];
@@ -22,8 +32,9 @@ const main = async () => {
   }
 
   console.info(`Setting ${setCallbacks.length} objects:`);
+
   // To avoid rate limiting, we need to split the promises into batches
-  await resolveCallbackBatches(setCallbacks, 3);
+  await resolveCallbackBatches(setCallbacks, config.apiCallsBatchSize);
 
   console.log('✅ done');
 };
